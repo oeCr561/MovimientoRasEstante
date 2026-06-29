@@ -190,10 +190,10 @@
                     <button id="btn-restablecer-masivo" onclick="window.sincronizarBase()" class="flex-1 md:flex-none bg-[#b0164c] hover:bg-[#92103d] text-white font-extrabold text-[11px] uppercase tracking-wider py-2.5 px-3.5 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 active:scale-95" title="Restablecer base con productos reales de Higiene">
                         <i data-lucide="rotate-ccw" class="w-4 h-4"></i> RESTABLECER CATÁLOGO RAS
                     </button>
-                    <button onclick="window.confirmarAccionMasiva('relleno')" class="flex-1 md:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-3.5 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 active:scale-95" title="Surtir automáticamente todas las metas del Estante">
+                    <button onclick="window.confirmarAccionMasiva('relleno')" class="flex-1 md:flex-none bg-[#059669] hover:bg-[#047857] text-white font-bold text-xs py-2.5 px-3.5 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 active:scale-95" title="Surtir automáticamente todas las metas del Estante">
                         <i data-lucide="zap" class="w-4 h-4"></i> RELLENAR TODO
                     </button>
-                    <button onclick="window.confirmarAccionMasiva('panico')" class="flex-1 md:flex-none bg-rose-700 hover:bg-rose-850 text-white font-bold text-xs py-2.5 px-3.5 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 active:scale-95" title="Reducir instantáneamente a cero todo el inventario de Estante">
+                    <button onclick="window.confirmarAccionMasiva('panico')" class="flex-1 md:flex-none bg-[#be123c] hover:bg-[#9f1239] text-white font-bold text-xs py-2.5 px-3.5 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 active:scale-95" title="Reducir instantáneamente a cero todo el inventario de Estante">
                         <i data-lucide="alert-octagon" class="w-4 h-4"></i> PÁNICO (VACIAR)
                     </button>
                 </div>
@@ -560,7 +560,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 
-        // CONFIGURACIÓN DE FIREBASE
+        // CONFIGURACIÓN DE FIREBASE ACTUALIZADA Y SINCRONIZADA
         const firebaseConfig = {
           apiKey: "AIzaSyALP6ZwiXg7Oos0Md-MptqblGxleOiUim4",
           authDomain: "aplicacionwebestante.firebaseapp.com",
@@ -1409,14 +1409,14 @@
                         window.registrarLogAccion(`Transfirió de Bodega a Estante: +1 de "${prod.nombre}".`);
                     } else {
                         window.playChime('danger');
-                        window.showToast(`⚠️ Sin stock disponible en Bodega.`);
+                        window.showToast("⚠️ Sin stock disponible en Bodega.");
                         return;
                     }
                 } else {
                     prod.cantidadActual += numericFactor;
                     if (prod.cantidadActual < 0) prod.cantidadActual = 0;
                     window.playChime('pop');
-                    window.registrarLogAccion(`Ajustó stock de "${prod.nombre}" en Estante: ${prod.cantidadActual}`);
+                    window.registrarLogAccion("Ajustó stock de \"" + prod.nombre + "\" en Estante: " + prod.cantidadActual);
                 }
 
                 window.renderAll();
@@ -1436,7 +1436,7 @@
                 }
 
                 window.playChime('pop');
-                window.registrarLogAccion(`Modificó Almacén de Bodega de "${prod.nombre}": ${prod.stockGrande} pzs.`);
+                window.registrarLogAccion("Modificó Almacén de Bodega de \"" + prod.nombre + "\": " + prod.stockGrande + " pzs.");
                 window.renderAll();
                 window.guardarSilenciosoNube();
             }
@@ -1453,13 +1453,13 @@
                 const piezasFaltantes = targetMeta - prod.cantidadActual;
                 
                 if (piezasFaltantes <= 0) {
-                    window.showToast(`✔ "${nombre}" ya cumple o supera el objetivo de estante.`);
+                    window.showToast("✔ \"" + nombre + "\" ya cumple o supera el objetivo de estante.");
                     return;
                 }
 
                 if (prod.stockGrande <= 0) {
                     window.playChime('danger');
-                    window.showToast(`⚠️ No hay stock disponible en Bodega.`);
+                    window.showToast("⚠️ No hay stock disponible en Bodega.");
                     return;
                 }
 
@@ -1469,16 +1469,16 @@
                     prod.stockGrande = 0;
                     prod.agotadoGrande = true;
                     window.playChime('success');
-                    window.registrarLogAccion(`Surtido Parcial: Transfirió ${stockDisponible} pzs de "${nombre}" a Estante.`);
-                    window.showToast(`✔ Surtido parcial de ${stockDisponible} pzs realizado.`);
+                    window.registrarLogAccion("Surtido Parcial: Transfirió " + stockDisponible + " pzs de \"" + nombre + "\" a Estante.");
+                    window.showToast("✔ Surtido parcial de " + stockDisponible + " pzs realizado.");
                 } else {
                     prod.stockGrande -= piezasFaltantes;
                     prod.cantidadActual = targetMeta;
                     prod.agotadoGrande = (prod.stockGrande <= 0);
                     
                     window.playChime('success');
-                    window.registrarLogAccion(`Surtido Completo: Se enviaron ${piezasFaltantes} pzs de Bodega a Estante de "${nombre}".`);
-                    window.showToast(`✔ ¡"${nombre}" surtido al 100%!`);
+                    window.registrarLogAccion("Surtido Completo: Se enviaron " + piezasFaltantes + " pzs de Bodega a Estante de \"" + nombre + "\".");
+                    window.showToast("✔ ¡\"" + nombre + "\" surtido al 100%!");
                 }
 
                 window.renderAll();
@@ -1492,10 +1492,10 @@
                 prod.stockGrande = 0;
                 prod.agotadoGrande = true; 
                 window.playChime('danger');
-                window.registrarLogAccion(`Marcó Agotado en Bodega: El producto "${nombre}" se reportó sin existencias.`);
+                window.registrarLogAccion("Marcó Agotado en Bodega: El producto \"" + nombre + "\" se reportó sin existencias.");
                 window.renderAll();
                 window.guardarSilenciosoNube();
-                window.showToast(`⚠️ "${nombre}" enviado a la lista del súper.`);
+                window.showToast("⚠️ \"" + nombre + "\" enviado a la lista del súper.");
             }
         };
 
@@ -1504,8 +1504,8 @@
             const prod = inventario.find(p => String(p.id) === String(id));
             if (prod) {
                 const qty = await window.openPromptModal(
-                    `📦 Reabastecer Bodega`,
-                    `¿Cuántas unidades de "${nombre}" están ingresando a Bodega?`,
+                    "📦 Reabastecer Bodega",
+                    "¿Cuántas unidades de \"" + nombre + "\" están ingresando a Bodega?",
                     50
                 );
 
@@ -1519,10 +1519,10 @@
                     prod.agotadoGrande = false;
 
                     window.playChime('success');
-                    window.registrarLogAccion(`Reabastecimiento Bodega: Surtido e ingresaron ${qty} pzs de "${nombre}".`);
+                    window.registrarLogAccion("Reabastecimiento Bodega: Surtido e ingresaron " + qty + " pzs de \"" + nombre + "\".");
                     window.renderAll();
                     window.guardarSilenciosoNube();
-                    window.showToast(`📦 ¡Reabastecida Bodega con ${qty} unidades!`);
+                    window.showToast("📦 ¡Reabastecida Bodega con " + qty + " unidades!");
                 }
             }
         };
@@ -1697,8 +1697,8 @@
             if (!item) return;
 
             const qty = await window.openPromptModal(
-                `📦 Entrada de Mercancía`,
-                `Ingresar unidades que entran a Bodega para "${nombre}":`,
+                "📦 Entrada de Mercancía",
+                "Ingresar unidades que entran a Bodega para \"" + nombre + "\":",
                 50
             );
 
@@ -1726,8 +1726,8 @@
             if (!item) return;
 
             const qty = await window.openPromptModal(
-                `📉 Salida de Mercancía`,
-                `Ingresar unidades que salen de Bodega para "${nombre}":`,
+                "📉 Salida de Mercancía",
+                "Ingresar unidades que salen de Bodega para \"" + nombre + "\":",
                 10
             );
 
@@ -1998,9 +1998,9 @@
             const kpiFaltantes = document.getElementById('kpi-faltantes');
             const kpiAgotadoGrande = document.getElementById('kpi-agotado-grande');
 
-            if (kpiAlDia) kpiAlDia.innerText = contAlDia;
-            if (kpiFaltantes) kpiFaltantes.innerText = contFaltantesChico;
-            if (kpiAgotadoGrande) kpiAgotadoGrande.innerText = contAgotadoGrande;
+            if (kpiAlDia) kpiAlDia.innerText = Math.round(contAlDia);
+            if (kpiFaltantes) kpiFaltantes.innerText = Math.round(contFaltantesChico);
+            if (kpiAgotadoGrande) kpiAgotadoGrande.innerText = Math.round(contAgotadoGrande);
 
             renderCategoryPills();
 
@@ -2196,22 +2196,19 @@
                     <div class="space-y-3">
                         <div class="flex items-start justify-between gap-4">
                             <div>
-                                <div class="flex items-center gap-1.5 flex-wrap">
-                                    <h3 class="font-bold text-slate-900 text-base leading-tight pr-2">${prod.nombre}</h3>
-                                    ${pCantidadActual >= pStockObjetivo && pStockObjetivo > 0 ? `<span class="bg-emerald-50 text-emerald-700 text-[10px] font-extrabold px-1.5 py-0.5 rounded-full border border-emerald-100">✓ Surtido</span>` : ''}
-                                </div>
+                                <h3 class="font-bold text-slate-900 text-base leading-tight pr-2">${prod.nombre}</h3>
                                 <p class="text-xs text-slate-400 mt-0.5 font-semibold">${prod.categoria} • ${prod.unidad}</p>
                             </div>
                             <div class="flex items-center gap-1 shrink-0">
-                                ${botonEditarHTML}
-                                ${botonEliminarHTML}
+                                ${botonEditHTML(prod.id)}
+                                ${botonDeleteHTML(prod.id, prod.nombre)}
                             </div>
                         </div>
                         
                         <div class="space-y-1">
                             <div class="flex justify-between items-center text-[10px] font-bold text-slate-400">
                                 <span>Progreso Estante</span>
-                                <span class="text-pink-600 font-bold">${pStockObjetivo > 0 ? `${Math.round(fillPercent)}%` : 'N/A'}</span>
+                                <span class="text-[#db2777] font-bold">${pStockObjetivo > 0 ? `${Math.round(fillPercent)}%` : 'N/A'}</span>
                             </div>
                             <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                                 <div class="${progressColorClass} h-1.5 rounded-full transition-all duration-300" style="width: ${pStockObjetivo > 0 ? fillPercent : 100}%"></div>
@@ -2244,6 +2241,22 @@
 
             try { lucide.createIcons(); } catch (e) { console.warn(e); }
         };
+
+        function botonEditHTML(id) {
+            return (rolUsuarioActual === 'Coordinador General') ? `
+                <button onclick="window.cargarFormularioEditar('${id}')" class="text-slate-300 hover:text-amber-500 p-1.5 rounded-lg hover:bg-amber-50 transition" title="Editar datos">
+                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                </button>
+            ` : '';
+        }
+
+        function botonDeleteHTML(id, nombre) {
+            return (rolUsuarioActual === 'Coordinador General') ? `
+                <button onclick="window.confirmarEliminacion('${id}', '${nombre}')" class="text-slate-300 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition" title="Eliminar">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+            ` : '';
+        }
 
         function targetNodeCardAppend(card) {
             const container = document.getElementById('contenedor-productos');
@@ -2456,7 +2469,7 @@
             toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-sky-400 flex-shrink-0"></i><span>${mensaje}</span>`;
             container.appendChild(toast);
             
-            try { lucide.createIcons(); } catch (e) { warn(e); }
+            try { lucide.createIcons(); } catch (e) { console.warn(e); }
             
             setTimeout(() => {
                 toast.classList.remove('translate-y-2');
