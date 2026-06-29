@@ -3,8 +3,8 @@
   "name": "Movimiento RAS - Control de Inventario",
   "icons": [
     {
-      "src": "icon.jpg",
-      "type": "image/jpeg",
+      "src": "icon.png",
+      "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
     }
