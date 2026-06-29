@@ -1,6 +1,6 @@
 {
-  "short_name": "AlmacenRAS",
-  "name": "Movimiento RAS - Inventario",
+  "short_name": "Estante AlmacenRas - Inventario",
+  "name": "Movimiento RAS - Control de Inventario",
   "icons": [
     {
       "src": "icon.jpg",

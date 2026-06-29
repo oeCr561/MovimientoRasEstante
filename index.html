@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Movimiento RAS - Control de Inventario Doble Almacén</title>
-    <link class="manifest-link" rel="manifest" href="./manifest.json">
+    
+    <!-- PWA e Iconos de Aplicación Integrados -->
     <link rel="icon" type="image/jpeg" href="icon.jpg">
+    <link rel="apple-touch-icon" href="icon.jpg">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#db2777">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="AlmacenRAS">
    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -2133,7 +2140,7 @@
                             <span class="text-xs font-bold text-slate-400">Stock Estante</span>
                             <div class="flex items-center gap-3">
                                 <button onclick="window.quitarCantidadChicoModal('${prod.id}', '${prod.nombre}')" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold transition text-base active:scale-90">-</button>
-                                class="w-6 text-center font-black text-base ${pCantidadActual < 0 ? 'text-rose-600' : 'text-slate-900'}">${pCantidadActual}</span>
+                                <span class="w-6 text-center font-black text-base ${pCantidadActual < 0 ? 'text-rose-600' : 'text-slate-900'}">${pCantidadActual}</span>
                                 <button onclick="window.cambiarCantidad('${prod.id}', 1)" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold transition text-base active:scale-90">+</button>
                             </div>
                         </div>
