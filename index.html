@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Movimiento RAS - Control de Inventario Doble Almacén</title>
+    <link rel="icon" type="image/jpeg" href="icon.jpg">
    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,7 +75,7 @@
     <div id="login-screen" class="flex-1 flex items-center justify-center p-4 min-h-screen bg-gradient-to-br from-pink-50 via-slate-50 to-sky-50">
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-100 max-w-md w-full text-center space-y-6">
             <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto flex items-center justify-center">
-                <img src="icon.png" alt="Logo Movimiento RAS" class="w-full h-full object-contain" onerror="window.showSvgFallback(this)">
+                <img src="icon.jpg" alt="Logo Movimiento RAS" class="w-full h-full object-contain rounded-2xl" onerror="window.showSvgFallback(this)">
                 <div class="hidden w-full h-full flex items-center justify-center bg-pink-100 text-pink-600 rounded-2xl font-bold text-xl">RAS</div>
             </div>
            
@@ -122,7 +123,7 @@
                 <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
                     <div class="flex items-center gap-3">
                         <div class="h-10 w-10 relative flex items-center justify-center">
-                            <img src="icon.png" alt="RAS" class="h-full w-full object-contain" onerror="window.showSvgFallback(this)">
+                            <img src="icon.jpg" alt="RAS" class="h-full w-full object-contain rounded-lg" onerror="window.showSvgFallback(this)">
                             <div class="hidden w-full h-full flex items-center justify-center bg-pink-100 text-pink-600 rounded-xl font-black text-xs">RAS</div>
                         </div>
                         <div>
@@ -1602,8 +1603,8 @@
                 inventario[index].agotadoGrande = (stockGrande <= 0);
 
                 window.playChime('success');
-                window.registrarLogAccion(`Modificación: Se editó el producto "${nombre}".`);
-                window.showToast(`✨ ¡"${nombre}" actualizado correctamente!`);
+                window.registrarLogAccion("Modificación: Se editó el producto \"" + nombre + "\".");
+                window.showToast("✨ ¡\"" + nombre + "\" actualizado correctamente!");
             }
 
             window.cerrarModalEditar();
@@ -1641,8 +1642,8 @@
                 inventario[existeIndex].agotadoGrande = (stockGrande <= 0);
 
                 window.playChime('success');
-                window.registrarLogAccion(`Modificación: Actualizó parámetros de "${nombre}".`);
-                window.showToast(`✨ ¡"${nombre}" actualizado correctamente!`);
+                window.registrarLogAccion("Modificación: Actualizó parámetros de \"" + nombre + "\".");
+                window.showToast("✨ ¡\"" + nombre + "\" actualizado correctamente!");
             } else {
                 const nuevoProd = {
                     id: "prod_" + Date.now(),
@@ -1659,7 +1660,7 @@
                 };
                 inventario.push(nuevoProd);
                 window.playChime('success');
-                window.registrarLogAccion(`Registro: Añadió "${nombre}" al catálogo.`);
+                window.registrarLogAccion("Registro: Añadió \"" + nombre + "\" al catálogo.");
                 window.showToast("✨ ¡" + nombre + " guardado correctamente!");
             }
 
@@ -1676,7 +1677,7 @@
             if (res) {
                 inventario = inventario.filter(prod => String(prod.id) !== String(id));
                 window.playChime('danger');
-                window.registrarLogAccion(`Eliminación: Removió "${nombre}" del catálogo.`);
+                window.registrarLogAccion("Eliminación: Removió \"" + nombre + "\" del catálogo.");
                 window.renderAll();
                 window.guardarSilenciosoNube();
                 window.showToast("🗑️ Producto eliminado.");
@@ -1705,7 +1706,7 @@
                 }
 
                 window.playChime('success');
-                window.registrarLogAccion(`Donación/Entrada: Registró +${qty} pzs en Bodega de "${nombre}".`);
+                window.registrarLogAccion("Donación/Entrada: Registró +" + qty + " pzs en Bodega de \"" + nombre + "\".");
                 window.renderAll();
                 window.guardarSilenciosoNube();
                 window.showToast("¡Se agregaron " + qty + " unidades a la Bodega!");
@@ -1740,7 +1741,7 @@
                 }
 
                 window.playChime('danger');
-                window.registrarLogAccion(`Salida/Merma: Se retiraron ${qty} pzs de Bodega de "${nombre}".`);
+                window.registrarLogAccion("Salida/Merma: Se retiraron " + qty + " pzs de Bodega de \"" + nombre + "\".");
                 window.renderAll();
                 window.guardarSilenciosoNube();
                 window.showToast("¡Se retiraron " + qty + " unidades de la Bodega!");
@@ -2131,7 +2132,7 @@
                             <span class="text-xs font-bold text-slate-400">Stock Estante</span>
                             <div class="flex items-center gap-3">
                                 <button onclick="window.quitarCantidadChicoModal('${prod.id}', '${prod.nombre}')" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold transition text-base active:scale-90">-</button>
-                                <span class="w-6 text-center font-black text-base ${pCantidadActual < 0 ? 'text-rose-600' : 'text-slate-900'}">${pCantidadActual}</span>
+                                class="w-6 text-center font-black text-base ${pCantidadActual < 0 ? 'text-rose-600' : 'text-slate-900'}">${pCantidadActual}</span>
                                 <button onclick="window.cambiarCantidad('${prod.id}', 1)" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold transition text-base active:scale-90">+</button>
                             </div>
                         </div>
