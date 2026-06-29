@@ -1,0 +1,17 @@
+{
+  "short_name": "AlmacenRAS",
+  "name": "Movimiento RAS - Inventario",
+  "icons": [
+    {
+      "src": "icon.jpg",
+      "type": "image/jpeg",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#e11d74",
+  "theme_color": "#e11d74",
+  "display": "standalone",
+  "orientation": "portrait"
+}
